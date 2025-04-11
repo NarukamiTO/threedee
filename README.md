@@ -1,10 +1,8 @@
 <div align="center">
 
-# Araumi.3ds
+# ThreeDee
 
-A Rust implementation of the low-level 3D Studio model parser.
-
-3D Studio models are used in Tanki Online. Araumi uses them for physics and resource servers.
+A minimal low-level Rust parser of the 3D Studio model format.
 
 </div>
 
