@@ -6,7 +6,7 @@ use std::fmt::Debug;
 use std::io::{BufRead, Cursor, Seek, SeekFrom};
 
 use byteorder::{LittleEndian, ReadBytesExt};
-use tracing::{debug, info, warn};
+use tracing::{debug, info};
 
 use crate::chunks::{
   EDIT_MATERIAL, EDIT_VERSION, MAIN3DS, MAIN_EDITOR, MAIN_KEYFRAMES, MAIN_VERSION, MATERIAL_NAME, MATERIAL_TEXTURE_MAP,
@@ -51,23 +51,23 @@ impl<T: AsRef<[u8]>> CursorExt for Cursor<T> {
 
 #[derive(Debug)]
 pub enum Main {
-  Editor(Vec<Editor>)
+  Editor(Vec<Editor>),
 }
 
 #[derive(Debug)]
 pub enum Editor {
-  Material(Vec<Material>)
+  Material(Vec<Material>),
 }
 
 #[derive(Debug)]
 pub enum Material {
   Name(String),
-  TextureMap(Vec<MaterialTextureMap>)
+  TextureMap(Vec<MaterialTextureMap>),
 }
 
 #[derive(Debug)]
 pub enum MaterialTextureMap {
-  Name(String)
+  Name(String),
 }
 
 impl<'a> Parser3DS<'a> {
@@ -143,7 +143,7 @@ impl<'a> Parser3DS<'a> {
           self.seek_to_next_chunk(&info);
         }
         _ => {
-          warn!("unknown editor chunk {:?}", info);
+          debug!("unknown editor chunk {:?}", info);
           self.seek_to_next_chunk(&info);
         }
       };
@@ -175,7 +175,7 @@ impl<'a> Parser3DS<'a> {
           self.seek_to_next_chunk(&info);
         }
         _ => {
-          warn!("unknown material chunk {:?}", info);
+          debug!("unknown material chunk {:?}", info);
           self.seek_to_next_chunk(&info);
         }
       }
@@ -202,7 +202,7 @@ impl<'a> Parser3DS<'a> {
           self.seek_to_next_chunk(&info);
         }
         _ => {
-          warn!("unknown material texture map chunk {:?}", info);
+          debug!("unknown material texture map chunk {:?}", info);
           self.seek_to_next_chunk(&info);
         }
       }
